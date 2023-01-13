@@ -1,15 +1,39 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Routes, Route,Link } from "react-router-dom";
 import "./App.css";
 import AddPost from "./components/AddPost";
 import Home from "./components/Home";
 import SignInOut from "./components/SignInOut";
-import { user } from "./types";
+import { post, user } from "./types";
 
 function App() {
   const [users,setUsers]=useState<user[]>([])
   const [user,setUser]=useState<user|null>(null)
-  const [posts,setPosts]=useState<[]>([])
+  const [post, setPost] = useState<post>();
+  const [posts,setPosts]=useState<post[]>([])
+  const [editIndex,setEditIndex]=useState<number>(-1)
+
+    // Populating local storage values in state
+  useEffect(()=>{
+    let localUser=localStorage.getItem('blogUser')
+    let localUsers=localStorage.getItem('blogUsers')
+    let localPost=localStorage.getItem('post')
+    let localPosts=localStorage.getItem('posts')
+
+    if(localUser){
+    setUser(JSON.parse(localUser))
+    }
+    if(localUsers){
+      setUsers(JSON.parse(localUsers))
+    }
+    if(localPosts){
+      setPosts(JSON.parse(localPosts))
+    }
+    if(localPost){
+      setPost(JSON.parse(localPost))
+    }
+  },[])
+
 
   return (
     <div className="App position-relative">
@@ -18,15 +42,15 @@ function App() {
           <div className="container-fluid">
             <Link to='/' className="text-decoration-none"><span className="navbar-brand"><i className="bi bi-pencil-square fs-4"></i> Blogzz</span></Link>
             <span>
-              <button className="btn border-0 text-white">Add Post</button>
-              {user===null?<Link to='/signInOut'><button className="btn border-0 text-white">Sign In</button></Link>:<button className="btn border-0 text-white">Sign Out</button>}
+              {user===null?<button type="button" className="btn border-0 text-white text-muted" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Sign in to add post">Add a Post</button>:<Link to='/addPost'><button className="btn border-0 text-white" >Add Post</button></Link>}
+              {user===null?<Link to='/signInOut'><button className="btn border-0 text-white">Sign In</button></Link>:<button className="btn border-0 text-white" onClick={()=>{setUser(null);localStorage.setItem('blogUser','')}}>Sign Out</button>}
             </span>
           </div>
         </nav>
       </header>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/addPost" element={<AddPost />} />
+        <Route path="/" element={<Home post={post} setPost={setPost} user={user} posts={posts} setPosts={setPosts} setEditIndex={setEditIndex} />} />
+        <Route path="/addPost" element={<AddPost post={post} setPost={setPost} posts={posts} setPosts={setPosts} user={user} setUser={setUser} editIndex={editIndex} setEditIndex={setEditIndex}/>} />
         <Route path="/signInOut" element={<SignInOut user={user} setUser={setUser} users={users} setUsers={setUsers}/>} />
       </Routes>
       <footer className="footer bg-dark text-white d-flex flex-wrap justify-content-between align-items-center py-4 px-3 border-top position-absolute bottom-0 w-100">

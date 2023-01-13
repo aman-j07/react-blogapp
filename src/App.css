@@ -1,12 +1,36 @@
 .App {
     text-align: center;
     min-height: 100vh;
-    padding-bottom: 100px;
+    padding-bottom: 80px;
+}
+
+.shorttxt  {
+    font-size: 14px;
+}
+
+.vshorttxt  {
+    font-size: 12px;
 }
 
 .signInOut  {
     max-width: 400px;    
     background-color: #a39c9c2e;
+}
+
+.addPost  {
+    max-width: 500px;
+}
+
+.previewimg  {
+    max-height: 150px;
+}
+
+.postimg  {
+    max-height: 300px;
+}
+
+.main  {
+    min-height: 90vh;
 }
 
 .footer  {
