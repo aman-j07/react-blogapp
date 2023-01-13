@@ -35,8 +35,8 @@ function Home(props:IProps) {
   return (
     <section className='main container border bg-light'>
       {posts.length!==0?posts.map((ele,i)=>{
-        return <div className="card align-items-center m-4 p-2" >
-        <div className='w-100 border-bottom d-flex justify-content-between'>
+        return <div className="card align-items-center m-4 p-0 border-0" >
+        <div className='w-100 border-bottom d-flex justify-content-between bg-dark text-white p-2'>
           <span>
             <h5 className="card-title text-start shorttxt">{ele.user}</h5>
             <h6 className="card-subtitle mb-2 text-muted text-start vshorttxt">{ele.lastEdited==='' ? ele.createdAt:ele.lastEdited}</h6>
@@ -47,9 +47,9 @@ function Home(props:IProps) {
           </span>:""}
 
         </div>
-        <div className="card-body w-100 ">
-          {ele.image!==''?<img src={ele.image} className="card-img-top postimg w-auto" alt="..."/>:''}
-          <p className="card-text text-start">{ele.txt}</p>
+        <div className="card-body w-100 border border-top-0 p-0 ">
+          {ele.image!==''?<img src={ele.image} className="card-img-top previewimg w-auto" alt="..."/>:''}
+          <p className="card-text text-start border-top border-2 p-2 mt-2">{ele.txt}</p>
         </div>
       </div>
       }):<h2 className='my-4'>Add some blogs :) Its empty here!!</h2>}

@@ -22,15 +22,12 @@
 }
 
 .previewimg  {
-    max-height: 150px;
-}
-
-.postimg  {
-    max-height: 300px;
+    max-height: 200px;
 }
 
 .main  {
     min-height: 90vh;
+    max-width: 600px;
 }
 
 .footer  {
